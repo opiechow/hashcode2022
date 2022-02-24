@@ -14,11 +14,12 @@ class Project:
         self.score = score
         self.deadline = deadline
         self.no_roles = no_roles
-        self.roles = {}
+        self.roles = []
         self.assigned = False
 
 class ProjectRole:
-    def __init__(self, required_level, index):
+    def __init__(self, name, required_level, index):
+        self.name = name
         self.required_level = required_level
         self.index = index
 
@@ -46,9 +47,29 @@ with open(in_file, "r") as f:
         project = Project(name, int(no_days), int(score), int(deadline), int(no_roles))
         for j in range(project.no_roles):
             name, required_lvl = f.readline().split()
-            project.roles[name] = ProjectRole(int(required_lvl),int(j))
+            project.roles.append(ProjectRole(name,int(required_lvl),int(j)))
 
         projects.append(project)
+
+projects.sort(key = lambda x: x.score)
+max_day = projects[-1].deadline + projects[-1].score
+for day in range(max_day):
+    for project in projects:
+        if project.assigned:
+            continue
+        possible_assignments = {}
+        for contributor in filter(lambda x: x.first_day_available <= day, contributors):
+            role_set = project.roles.map(lambda x: x.name)
+            skill_set = set(contributor.skills.keys())
+            common_skills = skill_set.intersection(role_set)
+            if len(common_skills) == 0:
+                continue
+            for common_skill in common_skills:
+                if project.roles[common_skill].required_level >= contributor[common_skill]:
+                    #contributor.first_day_available = day + project.no_days
+                    possible_assignments[common_skill] = contributor.name
+                    continue
+        
 
 
 pass
