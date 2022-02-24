@@ -1,6 +1,5 @@
 from mimetypes import init
 
-
 class Contributor:
     def __init__(self):
         self.name = ""
@@ -15,7 +14,11 @@ class Project:
         self.deadline = deadline
         self.no_roles = no_roles
         self.roles = {}
-    
+
+class ProjectRole:
+    def __init__(self, required_level, index):
+        self.required_level = required_level
+        self.index = index
 
 contributors = []
 projects = []
@@ -41,9 +44,9 @@ with open(in_file, "r") as f:
         project = Project(name, int(no_days), int(score), int(deadline), int(no_roles))
         for j in range(project.no_roles):
             name, required_lvl = f.readline().split()
-            project.roles[name] = required_lvl
+            project.roles[name] = ProjectRole(int(required_lvl),int(j))
 
         projects.append(project)
 
-print(contributors)
-print(projects)
+
+pass
