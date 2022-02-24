@@ -99,6 +99,8 @@ for day in range(max_day):
 
             project.assigned = True
             project.start_day = day
+        else:
+            project.assigned_roles = []
 
 
         """ for contributor in filter(lambda x: x.first_day_available <= day, contributors):
@@ -127,3 +129,4 @@ with open(out_file, "w") as f:
         for asignee in map(lambda x: x[0], project.assigned_roles):
             f.write(asignee.name)
             f.write(" ")
+        f.write("\n")
