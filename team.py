@@ -5,6 +5,7 @@ class Contributor:
         self.name = ""
         self.no_skills = 0
         self.skills = {}
+        self.first_day_available = 0
 
 class Project:
     def __init__(self, name, no_days, score, deadline, no_roles):
@@ -14,6 +15,7 @@ class Project:
         self.deadline = deadline
         self.no_roles = no_roles
         self.roles = {}
+        self.assigned = False
 
 class ProjectRole:
     def __init__(self, required_level, index):
