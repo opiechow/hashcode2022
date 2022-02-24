@@ -82,39 +82,20 @@ for day in range(max_day):
             for asignee, idx, oldskill in project.assigned_roles:
                 asignee.first_day_available = day + project.no_days
                 #todo: higher levels
-                name, lvl = skill.split()
-                for i in range(int(lvl)+1):
-                    skill = name + " " + str(i)
-                    if skill in role.skill:
-                        skill_name,level = oldskill.split()
-                        newskill = skill_name + " " + str(int(level)+1)
-                        asignee.skills = list(filter(lambda x: x != oldskill, asignee.skills))
-                        asignee.skills.append(newskill)
-
-                        skills[oldskill].remove(asignee)
-                        if newskill in skills:
-                            skills[newskill].append(asignee)
-                        else:
-                            skills[newskill] = [asignee]
+                skill_name,level = oldskill.split()
+                newskill = skill_name + " " + str(int(level)+1)
+                asignee.skills = list(filter(lambda x: x != oldskill, asignee.skills))
+                asignee.skills.append(newskill)
+                #skills[oldskill].remove(asignee)
+                if newskill in skills:
+                    skills[newskill].append(asignee)
+                else:
+                    skills[newskill] = [asignee]
 
             project.assigned = True
             project.start_day = day
         else:
             project.assigned_roles = []
-
-
-        """ for contributor in filter(lambda x: x.first_day_available <= day, contributors):
-            role_set = project.roles.map(lambda x: x.name)
-            skill_set = set(contributor.skills.keys())
-            common_skills = skill_set.intersection(role_set)
-            if len(common_skills) == 0:
-                continue
-            for common_skill in common_skills:
-                if project.roles[common_skill].required_level >= contributor[common_skill]:
-                    #contributor.first_day_available = day + project.no_days
-                    possible_assignments[common_skill] = contributor.name
-                    continue
- """
 
 done_projects = list(filter(lambda x: x.assigned, projects))
 done_projects.sort(key = lambda x: x.start_day)
