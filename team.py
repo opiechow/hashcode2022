@@ -18,6 +18,7 @@ class Project:
         self.mentored_roles = []
         self.assigned_roles = []
         self.assigned = False
+        self.start_day = 0
 
 class ProjectRole:
     def __init__(self, skill, index):
@@ -29,6 +30,7 @@ projects = []
 skills = {}
 
 in_file = "team_inputs/a_an_example.in.txt"
+out_file = "team_outputs/a_an_example.out.txt"
 
 with open(in_file, "r") as f:
     first_line = f.readline()
@@ -89,6 +91,7 @@ for day in range(max_day):
                     skills[newskill] = [asignee]
 
             project.assigned = True
+            project.start_day = day
 
 
         """ for contributor in filter(lambda x: x.first_day_available <= day, contributors):
@@ -104,5 +107,16 @@ for day in range(max_day):
                     continue
  """
 
+done_projects = list(filter(lambda x: x.assigned, projects))
+done_projects.sort(key = lambda x: x.start_day)
 
-pass
+with open(out_file, "w") as f:
+    f.write(str(len(done_projects)))
+    f.write("\n")
+    for project in done_projects:
+        f.write(project.name)
+        f.write("\n")
+        project.assigned_roles.sort(key = lambda x: x[1])
+        for asignee in map(lambda x: x[0], project.assigned_roles):
+            f.write(asignee.name)
+            f.write(" ")
