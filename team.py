@@ -29,8 +29,9 @@ contributors = []
 projects = []
 skills = {}
 
-in_file = "team_inputs/a_an_example.in.txt"
-out_file = "team_outputs/a_an_example.out.txt"
+base_name = "c_collaboration"
+in_file = f"team_inputs/{base_name}.in.txt"
+out_file = f"team_outputs/{base_name}.out.txt"
 
 with open(in_file, "r") as f:
     first_line = f.readline()
