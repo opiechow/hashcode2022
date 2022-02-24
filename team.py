@@ -27,4 +27,17 @@ with open(in_file, "r") as f:
         for j in range(contributor.no_skills):
             skill_name, skill_level = f.readline().split()
             contributor.skills[skill_name] = skill_level
+        contributors.append(contributor)
 
+
+    for i in range(no_projects):
+        name, no_days, score, deadline, no_roles = f.readline().split()
+        project = Project(name, int(no_days), int(score), int(deadline), int(no_roles))
+        for j in range(no_roles):
+            name, required_lvl = f.readline().split()
+            project.roles[name] = required_lvl
+
+        projects.append(project)
+
+print(contributors)
+print(projects)
