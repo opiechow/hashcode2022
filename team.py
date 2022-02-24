@@ -44,10 +44,13 @@ with open(in_file, "r") as f:
             # skill is name + level
             skill = f.readline().rstrip()
             contributor.skills.append(skill)
-            if skill in skills:
-                skills[skill].append(contributor)
-            else:
-                skills[skill] = [contributor]
+            name, lvl = skill.split()
+            for i in range(int(lvl)+1):
+                skill = name + " " + str(i)
+                if skill in skills:
+                    skills[skill].append(contributor)
+                else:
+                    skills[skill] = [contributor]
         contributors.append(contributor)
 
 
