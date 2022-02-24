@@ -1,20 +1,26 @@
+from mimetypes import init
+
+
 class Contributor:
-    name = ""
-    no_skills = 0
-    skills = {}
+    def __init__(self):
+        self.name = ""
+        self.no_skills = 0
+        self.skills = {}
 
 class Project:
-    name = ""
-    no_days = ""
-    score = 0
-    deadline = 0
-    no_roles = 0
-    roles = {}
+    def __init__(self, name, no_days, score, deadline, no_roles):
+        self.name = name
+        self.no_days = no_days
+        self.score = score
+        self.deadline = deadline
+        self.no_roles = no_roles
+        self.roles = {}
+    
 
 contributors = []
 projects = []
 
-in_file = "team_inputs/a_an_exapmle.in.txt"
+in_file = "team_inputs/a_an_example.in.txt"
 
 with open(in_file, "r") as f:
     first_line = f.readline()
@@ -33,7 +39,7 @@ with open(in_file, "r") as f:
     for i in range(no_projects):
         name, no_days, score, deadline, no_roles = f.readline().split()
         project = Project(name, int(no_days), int(score), int(deadline), int(no_roles))
-        for j in range(no_roles):
+        for j in range(project.no_roles):
             name, required_lvl = f.readline().split()
             project.roles[name] = required_lvl
 
