@@ -77,16 +77,20 @@ for day in range(max_day):
             for asignee, idx, oldskill in project.assigned_roles:
                 asignee.first_day_available = day + project.no_days
                 #todo: higher levels
-                skill_name,level = oldskill.split()
-                newskill = skill_name + " " + str(int(level)+1)
-                asignee.skills = list(filter(lambda x: x != oldskill, asignee.skills))
-                asignee.skills.append(newskill)
+                name, lvl = skill.split()
+                for i in range(int(lvl)+1):
+                    skill = name + " " + str(i)
+                    if skill in role.skill:
+                        skill_name,level = oldskill.split()
+                        newskill = skill_name + " " + str(int(level)+1)
+                        asignee.skills = list(filter(lambda x: x != oldskill, asignee.skills))
+                        asignee.skills.append(newskill)
 
-                skills[oldskill].remove(asignee)
-                if newskill in skills:
-                    skills[newskill].append(asignee)
-                else:
-                    skills[newskill] = [asignee]
+                        skills[oldskill].remove(asignee)
+                        if newskill in skills:
+                            skills[newskill].append(asignee)
+                        else:
+                            skills[newskill] = [asignee]
 
             project.assigned = True
 
